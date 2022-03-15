@@ -1,3 +1,4 @@
+
 class Snake {
     constructor(x, y, xSpeed, ySpeed, cell, tail) {
         this.x = x;
@@ -10,16 +11,24 @@ class Snake {
     }
 
     drawSnake() {
-        ctx.fillStyle = "blue";
+
 
         for (let i = 0; i < this.tail.length; i++) {
-
+            ctx.fillStyle = "blue";
             ctx.fillRect(this.tail[i].x, this.tail[i].y, grid, grid);
         }
+        ctx.fillStyle = "yellow"
         ctx.fillRect(this.x, this.y, grid, grid);
     }
 
     update() {
+        // for (let i= 0;i<this.tail.length;i++){
+        //     if(this.x === this.tail[i].x && this.y ===this.tail[i].y){
+        //         // alert("game over");
+        //         return true;
+        //     }
+        // }
+
         for (let i = 0; i < this.tail.length - 1; i++) {
             this.tail[i] = this.tail[i + 1]
         }
@@ -27,7 +36,6 @@ class Snake {
 
         this.x += this.xSpeed;
         this.y += this.ySpeed;
-
         if (this.x > canvas.width) {
             this.x = 0
         }
@@ -56,7 +64,6 @@ class Snake {
                     this.xSpeed = 0;
                     this.ySpeed = grid;
                 }
-
                 break;
             case "Left":
                 if(this.xSpeed===0){
@@ -81,17 +88,5 @@ class Snake {
         }
         return false;
     }
-    checkEnd(){
-        for (let i= 0;i<this.tail.length;i++){
-            if(this.x === this.tail[i].x&&this.y ===this.tail[i].y){
-                return true;
-            }return false;
-        }
 
-    }
-    over(){
-        ctx.fillStyle = "white";
-        ctx.font = "50px Verdana";
-        ctx.fillText("Game Over",canvas.width/6,canvas.height/2)
-    }
 }

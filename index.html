@@ -5,58 +5,78 @@
     <title>Snake Game</title>
     <script src="Snake.js"></script>
     <script src="Food.js"></script>
+    <script src="Draw.js"></script>
 </head>
 <body>
 <div id="score">
 
 </div>
-<canvas id="myCanvas" height="300" width="300" style="background-color: black"></canvas>
+<canvas onclick="setInterval(setup, 300)" id="myCanvas" height="300" width="300" style="border: 2px solid red"></canvas>
 </body>
 </html>
 <script>
     let cnt = 0;
     let canvas = document.getElementById("myCanvas");
     let ctx = canvas.getContext("2d")
-    console.log(canvas)
+    let begin = true;
     let grid = 20;
+    let snake = new Snake(100, 100, grid, 0, 0, [], 3);
 
-    let snake = new Snake(100, 100, grid, 0, 0, []);
-
-    let food = new Food()
-    setInterval(setup, 300)
+    let food = new Food(40, 80)
 
     addEventListener("keydown", ((evt) => {
         const direction = evt.key.replace("Arrow", "");
         snake.change(direction);
     }))
-    food.appear()
+    // food.appear()
+    if (begin) {
+        start();
+        begin = !begin;
+        console.log("check bat dau", begin)
+    } else {
+        // if (snake.update()) {
+        //     console.log("check trang thai va cham", snake.update())
+        //     bye()
+        //     begin = !begin;
+        setInterval(setup, 300)
+    }
+
 
     function setup() {
-        clear()
-        snake.update()
-        // console.log("snake", snake)
-        snake.drawSnake()
-        food.drawFood()
-        snake.change()
-        if (snake.eatFood(food)) {
-            console.log("eating")
-            food.appear();
+        for (let i = 0; i < snake.tail.length; i++) {
+            if (snake.x === snake.tail[i].x && snake.y === snake.tail[i].y) {
+                clear()
+                // ctx.beginPath();
+                // alert("game over");
+                bye();
+                return;
+                console.log("return", begin)
+            }
         }
-        document.getElementById("score").innerHTML = ("Score: " +cnt)
-        gameOver();
+        // begin = !begin
+        // console.log("check begin", begin)
+        // canvas.style.backgroundColor = "black";
+        clear()
+        snake.update();
+        // snake.checkEnd();
+        // console.log("snake", snake)
+        snake.drawSnake();
+        food.drawFood();
+        snake.change();
+        // console.log("di chuyen",snake.x)
+        // console.log("di chuyen Y ",snake.y)
+        // console.log("toa do thưc an",food)
+        if (snake.eatFood(food)) {
+            // console.log("eating")
+            food.appear();
+            //
+            // console.log("duoi ran",snake.tail)
+            // console.log("dau ran", snake.x)
+        }
+        document.getElementById("score").innerHTML = ("Score: " + cnt);
     }
 
     function clear() {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-    }
-    function gameOver(){
-        if(snake.checkEnd()){
-            alert("game over");
-            snake = new Snake(100, 100, grid, 0, 0, []);
-            food = new Food();
-            food.appear();
-            cnt = 0;
-            setup()
-        }
     }
 </script>
