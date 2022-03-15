@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Snake Game</title>
     <script src="Snake.js"></script>
     <script src="Food.js"></script>
 </head>
@@ -27,18 +27,18 @@
 
     addEventListener("keydown", ((evt) => {
         const direction = evt.key.replace("Arrow", "");
-        html.change(direction);
+        snake.change(direction);
     }))
     food.appear()
 
     function setup() {
         clear()
-        html.update()
+        snake.update()
         // console.log("snake", snake)
-        html.drawSnake()
+        snake.drawSnake()
         food.drawFood()
-        html.change()
-        if (html.eatFood(food)) {
+        snake.change()
+        if (snake.eatFood(food)) {
             console.log("eating")
             food.appear();
         }
@@ -50,9 +50,9 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
     function gameOver(){
-        if(html.checkEnd()){
+        if(snake.checkEnd()){
             alert("game over");
-            html = new Snake(100, 100, grid, 0, 0, []);
+            snake = new Snake(100, 100, grid, 0, 0, []);
             food = new Food();
             food.appear();
             cnt = 0;

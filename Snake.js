@@ -83,7 +83,7 @@ class Snake {
     }
     checkEnd(){
         for (let i= 0;i<this.tail.length;i++){
-            if(this.x === this.tail[i].x&&this.y ===this.tail[i].y||this.x === this.tail[i].x-grid&&this.y ===this.tail[i].y){
+            if(this.x === this.tail[i].x&&this.y ===this.tail[i].y){
                 return true;
             }return false;
         }
